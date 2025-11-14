@@ -1,0 +1,15 @@
+openai
+sentence-transformers
+datasets
+chromadb
+transformers
+torch
+peft
+bitsandbytes
+accelerate
+scikit-learn
+gradio
+plotly
+python-dotenv
+matplotlib
+modal
