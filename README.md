@@ -1,8 +1,8 @@
 # Pricely
 
-**Pricely** is an agentic AI system, a multi-agent, LLM-driven pricing and deal discovery assistant built with **Python**, **Gradio**, **ChromaDB**, **OpenAI**, and **Ollama**. It demonstrates a complete AI pipeline that includes data collection, model fine-tuning, agent coordination, and real-time visualization.
+Pricely is an agentic AI system, a multi-agent, LLM-driven pricing and deal discovery assistant built with Python, Gradio, ChromaDB**, OpenAI, and Ollama. It demonstrates a complete AI pipeline that includes data collection, model fine-tuning, agent coordination, and real-time visualization.
 
-At its core, Pricely features a **custom fine-tuned price estimation model** trained and deployed on **Hugging Face** and **Modal**, with training tracked using **Weights & Biases**. The project showcases how multiple specialized agents can collaborate autonomously to identify, estimate, and alert users about high-value product deals in real time, demonstrating fully agentic behavior and autonomous decision-making.
+At its core, Pricely features a custom fine-tuned price estimation model trained and deployed on Hugging Face and Modal, with training tracked using Weights & Biases. The project showcases how multiple specialized agents can collaborate autonomously to identify, estimate, and alert users about high-value product deals in real time, demonstrating fully agentic behavior and autonomous decision-making.
 
 ## Model Card and Training
 
@@ -77,6 +77,31 @@ The Specialist Agent runs a fine-tuned model trained to predict item prices base
 - **View Charts:** Compare actual and estimated prices or explore embeddings.  
 - **Monitor Logs:** Track live agent execution.  
 
+## How Pricely Works
+
+### Deal Collection
+- **ScannerAgent** retrieves and deduplicates new deals using memory tracking.  
+- Descriptions are summarized and standardized through OpenAI.
+
+### Price Estimation
+- **Specialist Agent:** Fine-tuned LLM (Ollama, Meta-Llama-3.1-8B) hosted on Modal.
+- **Frontier Agent:** Context-aware estimator using RAG and GPT-4o-mini.
+- **Random Forest Agent:** Embedding-based price predictor.
+- **Ensemble Agent:** Combines all predictions through linear regression.
+
+### Planning and Alerts
+- **PlanningAgent** computes discounts for each deal.  
+- **MessagingAgent** sends alerts when the discount threshold is exceeded.
+
+### Visualization
+- **Bar Chart:** Displays prices and estimated values.  
+- **3D Embeddings:** Shows product relationships and clusters.  
+- **Real-Time Logs:** Displays continuous agent updates.
+
+### Gradio Interface
+- Integrated layout combining tables, plots, and logs.  
+- Auto-refresh for live monitoring and updates.
+  
 ## Installation
 
 1. **Clone the repository**
@@ -109,54 +134,3 @@ python pricely.py
 
 6. **Open the Gradio interface**  
 A local URL (and optional public URL) will appear in the console.
-
-## How Pricely Works
-
-### Deal Collection
-- **ScannerAgent** retrieves and deduplicates new deals using memory tracking.  
-- Descriptions are summarized and standardized through OpenAI.
-
-### Price Estimation
-- **Specialist Agent:** Fine-tuned LLM (Ollama, Meta-Llama-3.1-8B) hosted on Modal.
-- **Frontier Agent:** Context-aware estimator using RAG and GPT-4o-mini.
-- **Random Forest Agent:** Embedding-based price predictor.
-- **Ensemble Agent:** Combines all predictions through linear regression.
-
-### Planning and Alerts
-- **PlanningAgent** computes discounts for each deal.  
-- **MessagingAgent** sends alerts when the discount threshold is exceeded.
-
-### Visualization
-- **Bar Chart:** Displays prices and estimated values.  
-- **3D Embeddings:** Shows product relationships and clusters.  
-- **Real-Time Logs:** Displays continuous agent updates.
-
-### Gradio Interface
-- Integrated layout combining tables, plots, and logs.  
-- Auto-refresh for live monitoring and updates.
-
-## File Structure
-```
-pricely/
-├── agents/
-│   ├── ensemble_agent.py
-│   ├── frontier_agent.py
-│   ├── random_forest_agent.py
-│   ├── specialist_agent.py
-│   ├── messaging_agent.py
-│   ├── planning_agent.py
-│   ├── scanner_agent.py
-│   ├── deals.py
-│   └── agent.py
-├── assets/
-│   └── screenshots/
-├── pricer_service.py
-├── pricely_dashboard.py
-├── deal_agent_framework.py
-├── items.py
-├── log_utils.py
-├── testing.py
-├── README.md
-├── requirements.txt
-└── LICENSE
-```
